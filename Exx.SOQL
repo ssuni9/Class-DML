@@ -1,0 +1,198 @@
+ATIVIDADE 8 
+
+1- 
+LIST<LEAD> LD = [SELECT NAME, COMPANY, STATE, EMAIL
+FROM LEAD
+WHERE STATE = 'CA' OR STATE = 'VA' 
+ORDER BY NAME DESC]; 
+
+FOR(LEAD LEADS : LD){
+    SYSTEM.debug('NAME: ' + LEADS.NAME);
+    SYSTEM.debug('COMPANY: ' + LEADS.COMPANY);
+    SYSTEM.debug('STATE: ' + LEADS.STATE);
+    SYSTEM.debug('EMAIL: ' + LEADS.EMAIL);
+}
+
+2-
+LIST<LEAD> LD = [SELECT NAME, STATUS
+FROM LEAD
+WHERE STATUS = 'OPEN - NOT CONTACTED' 
+]; 
+
+FOR(LEAD LEADS : LD){
+    SYSTEM.debug('NAME: ' + LEADS.NAME);
+    SYSTEM.debug('STATUS: ' + LEADS.STATUS);
+    SYSTEM.debug('\N');
+}
+
+3-
+List<Contact> ctt = [Select Name, Title, phone, account.name
+From Contact
+Where account.Name like '%United%' and account.name like '%Ltd%' 
+];
+
+For(Contact cttss : ctt){
+    System.debug('Name: ' + cttss.name);
+    System.debug('Title: ' + cttss.Title);
+    System.debug('Name: ' + cttss.account.name);
+}
+
+4-
+list<Account> accounts = [
+select name, phone, rating,CreatedDate, 
+(select name, phone 
+from contacts 
+order by account.name) 
+from account 
+order by createdDate desc ];
+
+FOR(Account acc : accounts) {
+System.debug ('Nome: ' + acc.Name);
+System.debug ('Classificação: ' + acc.Rating);
+System.debug('Data de Criação: ' + acc.createdDate);
+System.debug('\n');
+    
+    FOR(Contact ctt : acc.contacts){
+        System.debug ('Nome: ' + ctt.Name);
+        System.debug ('Phone: ' + ctt.Phone);
+        system.debug('\n');
+    }
+}
+
+5-
+(Esses são meus campos obrigátorios)
+
+Lead newLead = New Lead(
+LastName='Vovo JUJU',
+CNPJ__c='36468264',
+Company='Casa Grande',
+Phone='745984594'
+);
+
+insert newLead;
+
+6-
+Account newAcct = New Account(
+Name='Cleitinho',
+CNPJ__c='896596459',
+Phone='999999999999'
+);
+
+insert newAcct;
+
+7-
+Account x1 = new Account(Name='Ana Jesuita', CNPJ__c='0908767886');
+Account x2 =  new Account(Name='Roberta', CNPJ__c='757575775');
+Account x3 = new Account(Name='Olavo', CNPJ__c='442434433');
+Account x4 = new Account(Name='Michael', CNPJ__c='22323323232');
+Account x5 = new Account(Name='Hello', CNPJ__c='846464466464');
+Account x6 = new Account(Name='Maria Julia', CNPJ__c='948444545545');
+Account x7 = new Account(Name='Dante', CNPJ__c='4987348463');
+Account x8 = new Account(Name='Carla', CNPJ__c='49387492864');
+Account x9 = new Account(Name='Bruninha', CNPJ__c='34896584576');
+Account x10 = new Account(Name='Luiza',CNPJ__c='5743956835678354');
+
+List<account> contas = new List<account>();
+contas.add(x1);
+contas.add(x2);
+contas.add(x3);
+contas.add(x4);
+contas.add(x5);
+contas.add(x6);
+contas.add(x7);
+contas.add(x8);
+contas.add(x9);
+contas.add(x10);
+
+insert contas;
+
+8-
+//Nome antigo:Bruninha
+
+Account conta = new Account(
+Name='Angela',
+Phone='009900',
+Rating='Hot',
+id ='0018b00001xdXRNAA2'
+);
+    
+update conta;
+
+//Nome Antigo: Angela
+Account conta = new Account(
+Name='Javinha Jr',
+Phone='009900',
+Rating='Hot',
+id ='0018b00001xdXROAA2'
+);
+    
+update conta;
+
+
+//Nome Antigo: Dante
+Account conta = new Account(
+Name='Michael Scoot',
+Phone='0086868',
+Rating='Hot',
+id ='0018b00001xdXRLAA2'
+);
+    
+update conta;
+
+9-
+List<Account> State = [
+    SELECT billingState FROM ACCOUNT WHERE billingState = null
+];    
+    for(Account estado : State){
+        estado.billingState = 'CE';
+    }
+
+10-
+
+//EXLUINDO CONTA
+
+//Apaguei um chamado Maria Luiza
+
+Account acc = new Account(
+id = '0018b00001xdXRKAA2');
+
+delete acc;
+
+//Apaguei um chamado Olavo
+
+Account acc = new Account(
+id = '0018b00001xdXRHAA2');
+
+delete acc;
+
+//Apaguei um chamado Cleitinho
+
+Account acc = new Account(
+id = '0018b00001xdXQ7AAM');
+
+delete acc;
+
+//EXLUINDO OPORTUNIDADE
+
+//Apaguei uma chamada op3
+
+Opportunity opp = new Opportunity(
+id = '0068b00001JVq7jAAD');
+
+delete opp;
+
+
+//Apaguei uma chamada op1
+
+Opportunity opp = new Opportunity(
+id = '0068b00001JVq9FAAT');
+
+delete opp;
+
+//Apaguei uma chamada Pato joinha
+
+Opportunity opp = new Opportunity(
+id = '0068b00001JVndaAAD');
+
+delete opp;
+
