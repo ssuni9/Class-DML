@@ -1,0 +1,62 @@
+Atividade 
+
+1- 
+SELECT name, amount, CloseDate FROM Opportunity
+
+2-
+SELECT name, amount FROM Opportunity WHERE CloseDate>2021-06-01
+
+3-
+Select name, amount, Description, NextStep
+from Opportunity
+Where StageName like 'Closed won' AND amount>100000
+
+4-
+SELECT name, description, type, YearStarted
+FROM Account
+WHERE Name Like 'Uni%'
+
+5-
+SELECT name, company, Email
+FROM Lead
+WHERE Email Like '%.net' AND Status = 'Working - Contacted'
+
+6- 
+SELECT Name
+FROM Opportunity
+GROUP BY Name
+
+7-
+SELECT Name
+FROM Opportunity
+GROUP BY Name
+Having count(id)=3
+
+8- 
+SELECT NAME, AMOUNT, STAGENAME, NEXTSTEP, DESCRIPTION
+FROM OPPORTUNITY
+WHERE NAME LIKE '%OIL%' OR   LIKE '%GENE%' 
+
+9-
+SELECT NAME, format (AMOUNT), STAGENAME, format(createddate), format (CLOSEDATE)
+FROM OPPORTUNITY 
+WHERE STAGENAME = 'CLOSED WON' AND AMOUNT < 80000
+ORDER BY AMOUNT DESC 
+
+10-
+SELECT NAME, PHONE, (SELECT NAME, AMOUNT, STAGENAME FROM OPPORTUNITIES
+)FROM ACCOUNT
+
+11- 
+SELECT NAME,(
+SELECT NAME, AMOUNT FROM OPPORTUNITIES),(
+SELECT NAME FROM CONTACTS
+WHERE NAME LIKE 'A%')
+FROM ACCOUNT 
+ORDER BY NAME
+
+
+12- 
+SELECT NAME, STAGENAME, NEXTSTEP, AMOUNT 
+FROM OPPORTUNITY
+WHERE AMOUNT < 100000 AND CLOSEDATE<2022-02-11
