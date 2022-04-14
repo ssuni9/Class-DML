@@ -1,0 +1,188 @@
+ATIVIDADE 7
+
+1- 
+List<Opportunity> opp = [Select Name, Amount, Closedate From Opportunity];
+
+for(Opportunity oppor : opp){
+System.debug('Informações das oportunidades');
+System.debug('Nome: ' + oppor.Name);
+System.debug('Valor: ' + oppor.Amount);
+System.debug('Data: ' + oppor.CloseDate);
+System.debug('\n');
+}
+
+2-
+List<Opportunity> opp = [Select Name, Amount, Closedate 
+From Opportunity 
+Where CloseDate > 2021-06-01];
+                         
+
+for(Opportunity oppor : opp){
+System.debug('Informações das oportunidades');
+System.debug('Nome: ' + oppor.Name);
+System.debug('Valor: ' + oppor.Amount);
+System.debug('Data: ' + oppor.CloseDate);
+System.debug('\n');
+}
+
+3-
+List<Opportunity> opp = [Select Name, Amount, Stagename, description, NextStep 
+                         From Opportunity 
+                         Where StageName = 'Closed Won' and Amount>100000];
+                         
+
+for(Opportunity oppor : opp){
+System.debug('Informações das oportunidades');
+System.debug('Nome: ' + oppor.Name);
+System.debug('Valor: ' + oppor.Amount);
+System.debug('Stage name: ' + oppor.StageName);
+System.debug('Description: ' + oppor.Description);
+System.debug('Next Step: ' + oppor.NextStep);
+System.debug('\n');
+}
+
+4-
+List<Account> acc = [Select Name, Rating, Type, YearStarted
+                         From Account
+                         Where Name Like 'Uni%'];
+                         
+
+for(Account accounts : acc){
+System.debug('Informações das contas');
+System.debug('Nome: ' + accounts.Name);
+System.debug('Rating: ' + accounts.Rating);
+System.debug('Type: ' + accounts.Type);
+System.debug('Ano de inicio: ' + accounts.YearStarted);
+
+System.debug('\n');
+}
+
+5-
+List<Lead> Leads = [Select Name, Company, Email, Status
+                         From Lead
+                         Where email Like '%.net' and Status = 'Working - Contacted'];
+                         
+
+for(Lead lea : Leads){
+System.debug('Informações dos Leads');
+System.debug('Nome: ' + lea.Name);
+System.debug('Empresa: ' + lea.Company);
+System.debug('Email: ' + lea.Email);
+System.debug('Status: ' + lea.Status);
+System.debug('\n');
+}
+
+6-
+List<AggregateResult> opportunities = [SELECT name, count(id) FROM opportunity GROUP BY name ];
+
+
+For (AggregateResult opp : opportunities){
+    System.debug('Informações de Sistema');
+    System.debug('Nome: ' + opp.get('Name'));
+    System.debug('Id: ' + opp.get('expr0'));
+    System.debug('\n');
+}
+
+7- 
+List<AggregateResult> opportunities = [SELECT name, count(id)
+                                       FROM opportunity 
+                                       GROUP BY name
+                                       HAVING count(id) = 3];
+
+
+For (AggregateResult opp : opportunities){
+    System.debug('Informações de Sistema');
+    System.debug('Nome: ' + opp.get('Name'));
+    System.debug('Id: ' + opp.get('expr0'));
+    System.debug('\n');
+}
+
+8-
+List<Opportunity> opp = [Select Name, Amount, StageName, Description 
+                         From Opportunity
+                         WHERE name Like '%OIL%' OR name Like '%Gene%'];
+    
+
+for(Opportunity tunity : opp){
+System.debug('Informações das oportunidades');
+System.debug('Nome: ' + tunity.Name);
+System.debug('Valor: ' + tunity.Amount);
+System.debug('Fase: ' + tunity.StageName);
+System.debug('Descrição: ' + tunity.Description);
+System.debug('\n');
+}
+
+9-
+List<Opportunity> opp = [Select Name, Amount, StageName, CloseDate, CreatedDate 
+                         From Opportunity
+                         WHERE StageName = 'Closed Won' and Amount<80000
+                         ORDER BY Amount Desc];
+    
+
+for(Opportunity tunity : opp){
+System.debug('Informações das oportunidades');
+System.debug('Nome: ' + tunity.Name);
+System.debug('Valor: ' + tunity.Amount);
+System.debug('Fase: ' + tunity.StageName);
+System.debug('Data de fechamento: ' + tunity.CloseDate);
+System.debug('Data de Criação: ' + tunity.CreatedDate);
+System.debug('\n');
+}
+
+10-
+List<Account> accounts = [
+   select name, phone, (
+		select name, amount from Opportunities
+	) from account
+];
+
+FOR(Account acc : accounts) {
+System.debug ('Nome: ' + acc.Name);
+System.debug ('Telefone: ' + acc.phone);
+System.debug('\n');
+    
+    for(Opportunity opp : acc.opportunities){
+        System.debug ('Nome: ' + opp.Name);
+        System.debug ('Valor: ' + opp.Amount);
+        system.debug('\n');
+    }
+}
+
+11- 
+List<Account> accounts = [
+   select name, (
+		select name, amount from Opportunities
+	),(select name from Contacts Where name like 'A%')
+    from account
+    order by name
+];
+
+FOR(Account acc : accounts) {
+System.debug ('Nome: ' + acc.Name);
+System.debug('\n');
+    
+    for(Opportunity opp : acc.opportunities){
+        System.debug ('Nome: ' + opp.Name);
+        System.debug ('Valor: ' + opp.Amount);
+        system.debug('\n');
+        
+        for(Contact ctt : acc.contacts){
+        System.debug ('Nome: ' + ctt.Name);
+        system.debug('\n');
+        }
+    }
+}
+
+12-
+List<Opportunity> opp = [Select Name, StageName, NextStep, Amount, CloseDate
+                         From Opportunity
+                         Where Amount <100000 and CloseDate = last_quarter];
+
+for(Opportunity opport : opp){
+System.debug('Informações das oportunidades');
+System.debug('Nome: ' + opport.Name);
+System.debug('StageName: ' + opport.StageName);
+System.debug('Amount: ' + opport.Amount);
+System.debug('Data de Fechamento: ' + opport.CloseDate);
+System.debug('\n');
+}
